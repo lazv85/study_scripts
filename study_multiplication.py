@@ -11,7 +11,7 @@ def multiplication_test(number, wrong_answers):
         while (number, factor) not in wrong_answers:            
             factor = random.randint(2, 9)
 
-        input(f"press any key")
+        input(f"press any key. ")
         clear_screen()
 
         # Get user input
