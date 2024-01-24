@@ -75,7 +75,7 @@ def ask_question(key, dict, stat, questions):
     answer = -1
     while answer == -1:
         ans = input(f"enter the number of answer: ")
-        if is_numeric(ans):
+        if is_numeric(ans) and (int(ans) <= num_wrong_answers or int(ans) == 99):
             answer = int(ans)
         else:
             print("incorrect input, try again")
