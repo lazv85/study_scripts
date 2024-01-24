@@ -49,7 +49,7 @@ def build_questions(used_words, stat, dict):
     comb = {}
     for index, element in enumerate(used_words):
         if (stat[element]["tried"] < 4 or
-            stat[element]["correct_answer"]*0.8 < stat[element]["wrong_answer"]):
+            (stat[element]["correct_answer"]-1)*0.4 < stat[element]["wrong_answer"]):
             resp = []
             resp.append([dict[element], "y"])
             used = {index}
@@ -100,7 +100,10 @@ def test(used_words, dict, stat, questions):
         key = used_words[m]       
         if key in questions:
             input(f"press any key. ")
-            clear_screen()        
+            clear_screen()
+            question_to_go = len(questions)
+            print(f"{question_to_go} question to go")
+            print()
             resp = ask_question(key, dict, stat, questions)
             if resp == "q":
                 return
@@ -117,14 +120,18 @@ def parse_arguments():
 
     args = parser.parse_args()
 
-    ret = {}
-    ret["dir"] = args.directory
-    ret["file"] = args.filename
-    if args.stat is None:
-        ret["stat"] = ret["file"] + "_stat"
-    else:
-        ret["stat"] = args.stat
-    return ret
+    try:
+        ret = {}
+        ret["dir"] = args.directory
+        ret["file"] = args.filename
+        if args.stat is None:
+            ret["stat"] = ret["file"] + "_stat"
+        else:
+            ret["stat"] = args.stat
+        return ret
+    except Exception:
+        print("Usage: study_words.py -d <dir> -f <input_file>")
+        return {}
 
 def build_words_stat(used_words, stat):
     for w in used_words:
@@ -163,6 +170,8 @@ def write_words_stat(stat, file_path):
             file.write('\n')
 def main():
    args = parse_arguments()
+   if not args:
+       return
     # Check if the script is provided with the file path as a command-line argument
    file_path = args["dir"] + "/" + args["file"]
    stat_path = args["dir"] + "/" + args["stat"]   
