@@ -12,3 +12,5 @@ words/german300verbs.txt
 words/german300verbs.txt_stat
 words/german300newspaper.txt
 words/german300newspaper.txt_stat
+run_nouns.sh
+run_verbs.sh
